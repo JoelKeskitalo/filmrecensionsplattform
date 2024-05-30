@@ -13,7 +13,8 @@ exports.addMovie = async (req, res) => {
 
 exports.getAllMovies = async (req, res) => {
     try {
-
+        const movies = await Movie.find()
+        res.status(200).json({message: 'Movies saved: ', movies})
     } catch (error) {
         res.status(400).json(error)
     }
@@ -21,7 +22,11 @@ exports.getAllMovies = async (req, res) => {
 
 exports.getMovieById = async (req, res) => {
     try {
-
+        const movie = await Movie.findById(req.params.id)
+        if (!movie) {
+            return res.status(404).json({message: 'Movie not found'})
+        }
+        res.status(200).json(movie)
     } catch (error) {
         res.status(400).json(error)
     }
