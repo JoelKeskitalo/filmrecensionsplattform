@@ -32,7 +32,7 @@ exports.getMovieById = async (req, res) => {
     }
 }
 
-exports.updateMovieById = async (req, res) => {
+/* exports.updateMovieById = async (req, res) => {
     try {
 
     } catch (error) {
@@ -50,4 +50,4 @@ exports.getAllReviewsById = async (req, res) => {
 
 exports.deleteMovieById = async (req, res) => {
 
-}
+} */
