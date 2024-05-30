@@ -5,7 +5,7 @@ const userController = require('../controllers/userControllers')
 // base: http://localhost:6000/moviereview-api/users
 
 
-router.post('/register', userController.registerUser)
+router.post('/register', userController.createUser)
 router.post('/login', userController.loginUser)
 router.get('/', userController.getAllUsers)
 
