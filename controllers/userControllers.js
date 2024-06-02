@@ -59,3 +59,41 @@ exports.loginUser = async (req, res) => {
         res.status(400).json(error)
     }
 }
+
+exports.deleteUserByUsername = async (req, res) => { // testa imorgon
+    try {
+        const { username }  = req.body
+        const user = await User.findOne({username})
+
+        if(!user) {
+            return res.status(400).send('User not found')
+        }
+
+        user.deleteOne()
+        res.status(200).json({message: 'User deleted successfully:', user})
+    } catch (error) {
+        res.status(400).send(error)
+    }
+}
+
+exports.deleteUserById = async (req, res) => { // testa imorgon 
+    try {
+        if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+            return res.status(400).send('Not a valid ID')
+        }
+
+        const user = await User.findByIdAndDelete(req.params.id)
+
+        if (!user) {
+            return res.status(404).send('User not found')
+        }
+
+        res.status(200).json({
+            message: 'User has been deleted successfully',
+            user: user
+        })
+        
+    } catch (error) {
+        res.status(400).send(error)
+    }
+}
