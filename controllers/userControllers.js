@@ -60,7 +60,7 @@ exports.loginUser = async (req, res) => {
     }
 }
 
-exports.deleteUserByUsername = async (req, res) => { // KOLLA ÖVER !!! 
+exports.deleteUserByUsername = async (req, res) => { 
     try {
         const { username }  = req.body
         const user = await User.findOne({username})
@@ -69,7 +69,7 @@ exports.deleteUserByUsername = async (req, res) => { // KOLLA ÖVER !!!
             return res.status(400).send('User not found')
         }
 
-        user.deleteOne()
+        await user.deleteOne()
         res.status(200).json({message: 'User deleted successfully:', user})
     } catch (error) {
         res.status(400).send(error)
