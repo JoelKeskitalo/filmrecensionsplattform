@@ -60,7 +60,7 @@ exports.loginUser = async (req, res) => {
     }
 }
 
-exports.deleteUserByUsername = async (req, res) => { // testa imorgon
+exports.deleteUserByUsername = async (req, res) => { // KOLLA ÖVER !!! 
     try {
         const { username }  = req.body
         const user = await User.findOne({username})
@@ -76,7 +76,7 @@ exports.deleteUserByUsername = async (req, res) => { // testa imorgon
     }
 }
 
-exports.deleteUserById = async (req, res) => { // testa imorgon 
+exports.deleteUserById = async (req, res) => { 
     try {
         if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
             return res.status(400).send('Not a valid ID')
