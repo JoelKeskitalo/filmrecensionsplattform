@@ -4,7 +4,7 @@ const Review = require('../models/reviewModel')
 exports.createReview = async (req, res) => {
     try {
         const { movieId, userId, rating, comment } = req.body
-        const review = new Review (movieId, userId, rating, comment)
+        const review = new Review(movieId, userId, rating, comment)
         await review.save()
         res.status(200).json({message: 'Review succcessfully created', review})
     } catch (error) {
