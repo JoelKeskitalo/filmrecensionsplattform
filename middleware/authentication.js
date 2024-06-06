@@ -18,4 +18,14 @@ const authentication = (req, res, next) => {
     }
 }
 
-module.exports = authentication
+const adminAuthentication = (req, res, next) => {
+    if (req.user.role !== 'admin') {
+        return res.status(403).json({message: 'Access not granted, admins only.'})
+    }
+    next(1)
+}
+
+module.exports = {
+    authentication,
+    adminAuthentication
+}
