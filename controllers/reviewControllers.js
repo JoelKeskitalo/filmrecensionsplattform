@@ -3,14 +3,19 @@ const Review = require('../models/reviewModel')
 
 exports.createReview = async (req, res) => {
     try {
-        const { movieId, userId, rating, comment } = req.body
-        const review = new Review(movieId, userId, rating, comment)
-        await review.save()
-        res.status(200).json({message: 'Review succcessfully created', review})
+        const { movieId, userId, rating, comment } = req.body;
+        console.log('Creating review with data:', { movieId, userId, rating, comment })
+        
+        const review = new Review({ movieId, userId, rating, comment })
+        await review.save();
+        
+        console.log('Review created:', review)
+        res.status(201).json({ message: 'Review created successfully', review })
     } catch (error) {
-        res.status(400).send(error)
+        console.log('Error creating review:', error)
+        res.status(400).json({ message: 'Error creating review', error })
     }
-}
+};
 
 exports.getAllReviews = async (req, res) => {
     try {
