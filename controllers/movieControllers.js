@@ -48,7 +48,7 @@ exports.updateMovieById = async (req, res) => { // måste testas
     }
 }
 
-exports.getAllReviewsById = async (req, res) => { // måste testas
+exports.getAllReviewsById = async (req, res) => {
     try {
 
         const reviews = await Review.find({movieId: req.params.id})
@@ -75,5 +75,40 @@ exports.deleteMovieById = async (req, res) => { // måste testas
         
     } catch(error) {
         res.status(400).json(error)
+    }
+}
+
+exports.getMovieRatings = async (req, res) => {
+    try {
+
+        const movies = await Movie.aggregate([
+            {
+                $lookup: {
+                    from: 'reviews', // namnet på den samling som innehåller recensioner
+                    localField: '_id', // fältet i movies som matchar 
+                    foreignField: 'movieId', // Fältet i reviews som matchar¨
+                    as: 'reviews' // nament på det nya fältet som läggs till med det matchande dokumentet 
+                }
+            },
+            {
+                $addFields: {
+                    averageRating: { $avg: '$reviews.rating'} // beräknar det genomsnittliga betyget 
+                }
+            },
+            {
+                $project: {
+                    title: 1,
+                    director: 1,
+                    releaseYear: 1,
+                    genre: 1,
+                    averageRating: 1
+                }
+            }
+        ])
+
+        res.status(200).json(movies)
+
+    } catch(error) {
+        res.status(400).json({message: 'Error fetching movie ratings', error})
     }
 }

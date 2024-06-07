@@ -6,7 +6,9 @@ const { authentication, adminAuthentication } = require('../middleware/authentic
 // base: http://localhost:6000/moviereview-api/movies
 
 router.post('/', authentication, adminAuthentication, movieController.addMovie)
+
 router.get('/', movieController.getAllMovies)
+router.get('/ratings', movieController.getMovieRatings)
 router.get('/:id', movieController.getMovieById)
 
 router.put('/:id', authentication, adminAuthentication, movieController.updateMovieById)
